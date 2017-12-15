@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-md-6">
+    <h1>Product List</h1>
+      <table class="table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="text-center">ID</th>
+        <th class="text-center">Name</th>
+        <th class="text-center">Description</th>
+        <th class="text-center">Price</th>
+        <th class="text-center">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of products">
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.price | currency:'USD':'symbol':'1.0-2' }}</td>
+        <td>
+          <button class="btn btn-info"
+                        (click)="showEditProductForm(item)">
+                       <i class="fa fa-edit"></i>
+          </button>
+          <button class="btn btn-danger"
+                       (click)="removeProduct(product)">
+                       <i class="fa fa-minus"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="btn btn-success"
+               (click)="showAddProductForm()">
+               <i class="fa fa-plus"></i>
+  </button>
+
+
+  <form *ngIf="isProductForm"  novalidate>
+      <h2>Add New Product</h2>
+      
+      <div class="form-group">
+        <label for="productID">ID</label>
+        <input  type="number" id="productID" class="form-control" [(ngModel)]="newProduct.id" [ngModelOptions]="{standalone: true}" placeholder="商品序列号">
+      </div>
+
+      <div class="form-group">
+          <label for="productName">Name</label>
+          <input  type="text" id="productName" class="form-control" [(ngModel)]="newProduct.name" [ngModelOptions]="{standalone: true}" placeholder="商品名字">
+      </div>
+
+      <div class="form-group">
+            <label for="productDesc">Description</label>
+            <input  type="text" id="productDesc" class="form-control" [(ngModel)]="newProduct.description" [ngModelOptions]="{standalone: true}" placeholder="商品描述">
+      </div>
+
+      <div class="form-group">
+            <label for="productPrice">Price</label>
+            <input  type="number" id="productPrice" class="form-control" [(ngModel)]="newProduct.price" [ngModelOptions]="{standalone: true}" placeholder="商品价钱">
+      </div>
+      
+      <div class="form-group">
+          <button type="button" class="btn btn-primary" (click)="addProduct(newProduct)">Submit </button>
+          <button type="button" class="btn btn-warning" (click)="cancelNewProduct()">Cancel</button>
+      </div>
+     </form>
+
+     <form *ngIf="isEditProductForm">
+        <h2>Edit Product Details</h2>
+        <p>ID: <input type="text" name="id" [(ngModel)]="editedProduct.id" /></p>
+        <p>Name: <input type="text" name="name" [(ngModel)]="editedProduct.name" /></p>
+        <p>Description: <input type="text" name="description" [(ngModel)]="editedProduct.description" /></p>
+        <p>Price: <input type="text" name="price" [(ngModel)]="editedProduct.price" /></p>
+        <p>
+          <button type="button" class="btn btn-primary" (click)="updateProduct()">Submit</button>
+          <button type="button" class="btn btn-warning" (click)="cancelEdits()">Cancel</button>
+        </p>
+      </form>
+  </div>
+</div>
